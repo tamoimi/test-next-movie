@@ -2,12 +2,26 @@ import Image from "next/image";
 import { TopRatedMovies } from "./api/movies/type";
 import useSWR from "swr";
 import "../styles/Home.module.css";
+import { useState } from "react";
+import SearchBar from "../components/SearchBar";
 
 export default function Home() {
   // swr
-
   const { isLoading, data } = useSWR<TopRatedMovies>(`/api/movies`);
   console.log("data", data);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [counts, setCounts] = useState({
+    tat
+  })
+  
+  const hasNext = 
+
+  const onChangeSearch = (value) => {
+    setSearchTerm(value);
+    setCurrentPage(1);
+  };
   return (
     <>
       <div className="container">
@@ -17,7 +31,9 @@ export default function Home() {
           </>
         ) : (
           <>
+          <SearchBar onChange value/>
             {data.results.map((data) => (
+              
               <div key={data.id} className="movie">
                 <img
                   src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
