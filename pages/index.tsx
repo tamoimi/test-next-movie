@@ -13,10 +13,10 @@ export default function Home() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [counts, setCounts] = useState({
-    tat
+   
   })
   
-  const hasNext = 
+  // const hasNext = 
 
   const onChangeSearch = (value) => {
     setSearchTerm(value);
