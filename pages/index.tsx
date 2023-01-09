@@ -3,6 +3,7 @@ import { TopRatedMovies } from "./api/movies/type";
 import useSWR from "swr";
 import "../styles/Home.module.css";
 import { useState } from "react";
+import { getSearchMovies } from "./api/search/type";
 
 export default function Home() {
   //states
@@ -11,76 +12,63 @@ export default function Home() {
   console.log("movieName", movieName);
 
   // swr
-  const { mutate } = useSWR(
-    movieName !== "" ? `/api/search?movieName=${movieName}` : null,
-    {
-      onSuccess: (data) => {
-        setMovies(data);
-      },
-    }
-  );
+  const { isLoading, data } = useSWR<TopRatedMovies>(`/api/movies`);
+  const { data: results } = useSWR<getSearchMovies>(`api/search`);
+
   const getSearchedMovies = () => {
-    mutate();
+    setMovies([results]);
+    console.log("결과", setMovies);
   };
 
   return (
     <>
-      <div className="searchBox">
-        <input
-          type="search"
-          placeholder="Search"
-          onChange={(e) => setMovieName(e.target.value)}
-        />
-        <button onClick={getSearchedMovies}>search</button>
-      </div>
       <div className="container">
-        {movies.map((movie) => (
-          <div key={movie.id} className="resultsBox">
-            <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
-            <p>{movie.title}</p>
-          </div>
-        ))}
+        {isLoading ? (
+          <>
+            <h1>로딩중...</h1>
+          </>
+        ) : (
+          <>
+            <div>
+              <input
+                type="search"
+                placeholder="Search"
+                onChange={(e) => setMovieName(e.target.value)}
+              />
+              <button onClick={getSearchedMovies}>search</button>
+            </div>
+            {/* {data.results.map((data) => (
+              <div key={data.id} className="movie">
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
+                  alt="people"
+                  width={500}
+                  height={600}
+                />
+                <h1>{data.title}</h1>
+                <h4>{data.popularity}</h4>
+                <p>{data.overview}</p>
+              </div>
+            ))} */}
+            {movies.map((movie) => (
+              <ul key={movie.id}>
+                <li>{movie.title}</li>
+              </ul>
+            ))}
+          </>
+        )}
       </div>
       <style>{`
         .container {
-          margin: 50px 0;
-          gap: 60px;
-          border-radius: 12px;
           display: grid;
           grid-template-columns: 1fr 1fr 1fr 1fr;
+          padding: 100px;
+          gap: 60px;
         }
-        .container img {
-          width: 100%;
-        }
-        .searchBox {
-          padding: 50px;
-          background: #3F4E4F;
+        .movie img {
+          max-width: 100%;
           border-radius: 12px;
-          display: flex;
-          justify-content: center;
-          gap: 5px;
-        }
-        .resultsBox img {
-          border-radius: 12px;
-        }
-        input {
-          width: 90%;
-          height: 60px;
-          border: none;
-          border-radius: 4px;
-          font-size: 20px;
-          padding: 0 20px;
-        }
-        button {
-          background: #DCD7C9;
-          border: none;
-          border-radius: 4px;
-          font-size: 20px;
-        }
-        p {
-          text-align: center;
-          font-size: 20px;
-          color: white;
+          box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
         }
       `}</style>
     </>
