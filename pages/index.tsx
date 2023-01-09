@@ -1,27 +1,25 @@
-import Image from "next/image";
+/* eslint-disable react-hooks/rules-of-hooks */
 import { TopRatedMovies } from "./api/movies/type";
 import useSWR from "swr";
 import "../styles/Home.module.css";
 import { useState } from "react";
-import SearchBar from "../components/SearchBar";
+import { getSearchMovies } from "./api/search/type";
 
 export default function Home() {
+  //states
+  const [movies, setMovies] = useState([]);
+  const [movieName, setMovieName] = useState("");
+  console.log("movieName", movieName);
+
   // swr
   const { isLoading, data } = useSWR<TopRatedMovies>(`/api/movies`);
-  console.log("data", data);
+  const { data: results } = useSWR<getSearchMovies>(`api/search`);
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [counts, setCounts] = useState({
-   
-  })
-  
-  // const hasNext = 
-
-  const onChangeSearch = (value) => {
-    setSearchTerm(value);
-    setCurrentPage(1);
+  const getSearchedMovies = () => {
+    setMovies([results]);
+    console.log("결과", setMovies);
   };
+
   return (
     <>
       <div className="container">
@@ -31,24 +29,36 @@ export default function Home() {
           </>
         ) : (
           <>
-          <SearchBar onChange value/>
-            {data.results.map((data) => (
-              
+            <div>
+              <input
+                type="search"
+                placeholder="Search"
+                onChange={(e) => setMovieName(e.target.value)}
+              />
+              <button onClick={getSearchedMovies}>search</button>
+            </div>
+            {/* {data.results.map((data) => (
               <div key={data.id} className="movie">
                 <img
                   src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
                   alt="people"
-                  className="people_img"
+                  width={500}
+                  height={600}
                 />
                 <h1>{data.title}</h1>
                 <h4>{data.popularity}</h4>
                 <p>{data.overview}</p>
               </div>
+            ))} */}
+            {movies.map((movie) => (
+              <ul key={movie.id}>
+                <li>{movie.title}</li>
+              </ul>
             ))}
           </>
         )}
       </div>
-      <style jsx>{`
+      <style>{`
         .container {
           display: grid;
           grid-template-columns: 1fr 1fr 1fr 1fr;

@@ -1,20 +1,18 @@
 //request 타입
-export interface TopRatedMoviesParams {
+export interface getSearchMoviesParams {
   api_key: string;
   language: string;
+  query: string;
   page: number;
-  region: string;
 }
 
 //response 타입
-export interface TopRatedMovies {
+export interface getSearchMovies {
   results: [
     {
       id: number;
       poster_path: string;
-      title: string;
-      popularity: number;
-      overview: string;
+      original_title: string;
     }
   ];
 }
