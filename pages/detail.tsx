@@ -1,8 +1,7 @@
 import { TopRatedMovies } from "./api/movies/type";
 import useSWR from "swr";
-import Link from "next/link";
 
-const TopRated = () => {
+const DetailPage = () => {
   // swr
   const { isLoading, data } = useSWR<TopRatedMovies>(`/api/movies`);
   return (
@@ -16,7 +15,6 @@ const TopRated = () => {
           <>
             {data.results.map((data) => (
               <div key={data.id} className="movie">
-                <Link href={`/movies/${data.id}`} key={data.id}>
                   <img
                     src={`https://image.tmdb.org/t/p/w500${data.poster_path}`}
                     alt="people"
@@ -24,7 +22,6 @@ const TopRated = () => {
                     height={600}
                   />
                   <h2>{data.title}</h2>
-                </Link>
                 <h4>{data.release_date}</h4>
                 <p>
                   {data.overview.length > 230
@@ -85,4 +82,4 @@ const TopRated = () => {
     </>
   );
 };
-export default TopRated;
+export default DetailPage;

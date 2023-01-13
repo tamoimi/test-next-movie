@@ -1,9 +1,6 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import { TopRatedMovies } from "./api/movies/type";
 import useSWR from "swr";
 import "../styles/Home.module.css";
 import { useState } from "react";
-import { getSearchMovies } from "./api/search/type";
 
 export default function Home() {
   //states
@@ -42,7 +39,7 @@ export default function Home() {
           </div>
         ))}
       </div>
-      <style>{`
+      <style jsx>{`
         .container {
           margin: 50px 0;
           gap: 60px;

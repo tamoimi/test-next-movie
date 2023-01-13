@@ -13,7 +13,7 @@ export interface TopRatedMovies {
       id: number;
       poster_path: string;
       title: string;
-      popularity: number;
+      release_date: string;
       overview: string;
     }
   ];
