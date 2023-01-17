@@ -38,8 +38,51 @@ export default function Home() {
             <p>{movie.title}</p>
           </div>
         ))}
+        <div>
+          <div
+            className="bigBox"
+            style={{
+              width: "1200px",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <div className="item">1</div>
+            <div className="item">2</div>
+            <div className="item">3</div>
+            <div className="item">4</div>
+          </div>
+
+          <div className="photos">
+            <img src="reebok.jpg" />
+            <img src="nike.jfif" />
+            <img src="nba.jpg" />
+            <img src="adidas.jpg" />
+          </div>
+
+        </div>
       </div>
       <style jsx>{`
+      .photos {
+        display: flex;
+        width: 900px;
+      }
+      .photos img {
+        width: 20px;
+        aspect-ratio: 3/1;
+        object-fit: contain;
+        mix-blend-mode: color-burn;
+      }
+        .item {
+          width: 200px;
+          height: 200px;
+          background: white;
+          transition: 0.3s;
+        }
+        .bigBox:hover > :not(:hover) {
+          opacity: 0.4;
+        }
+
         .container {
           margin: 50px 0;
           gap: 60px;
@@ -52,7 +95,7 @@ export default function Home() {
         }
         .searchBox {
           padding: 50px;
-          background: #3F4E4F;
+          background: #3f4e4f;
           border-radius: 12px;
           display: flex;
           justify-content: center;
@@ -70,7 +113,7 @@ export default function Home() {
           padding: 0 20px;
         }
         button {
-          background: #DCD7C9;
+          background: #dcd7c9;
           border: none;
           border-radius: 4px;
           font-size: 20px;
